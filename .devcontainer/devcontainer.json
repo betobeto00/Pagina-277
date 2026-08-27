@@ -1,0 +1,25 @@
+{
+  "name": "Virtud y Victoria 277 - WordPress Preview",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "wordpress",
+  "workspaceFolder": "/var/www/html",
+  "forwardPorts": [80, 3306],
+  "portsAttributes": {
+    "80": {
+      "label": "WordPress Site",
+      "onAutoForward": "openPreview"
+    }
+  },
+  "postCreateCommand": "bash .devcontainer/setup.sh",
+  "remoteUser": "www-data",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "bmewburn.vscode-intelephense-client",
+        "felixfbecker.php-debug",
+        "mblode.twig-language-2",
+        "tamasfe.even-better-toml"
+      ]
+    }
+  }
+}

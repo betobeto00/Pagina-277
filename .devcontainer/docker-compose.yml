@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  mariadb:
+    image: mariadb:11.4
+    container_name: vyv-mariadb
+    environment:
+      MYSQL_DATABASE: virtud_y_victoria
+      MYSQL_USER: virtud_user
+      MYSQL_PASSWORD: virtud_pass
+      MYSQL_ROOT_PASSWORD: root_pass
+    volumes:
+      - mariadb-data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot_pass"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    networks:
+      - vyv-network
+
+  wordpress:
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile
+    container_name: vyv-wordpress
+    environment:
+      WORDPRESS_DB_HOST: mariadb:3306
+      WORDPRESS_DB_NAME: virtud_y_victoria
+      WORDPRESS_DB_USER: virtud_user
+      WORDPRESS_DB_PASSWORD: virtud_pass
+      WORDPRESS_TABLE_PREFIX: wp_
+      WORDPRESS_DEBUG: "false"
+      WORDPRESS_CONFIG_EXTRA: |
+        define('WP_HOME','http://localhost');
+        define('WP_SITEURL','http://localhost');
+        define('WP_ENVIRONMENT_TYPE', 'development');
+    volumes:
+      - ../wp-theme:/var/www/html/wp-content/themes/virtud-y-victoria
+    ports:
+      - "80:80"
+    depends_on:
+      mariadb:
+        condition: service_healthy
+    networks:
+      - vyv-network
+
+volumes:
+  mariadb-data:
+
+networks:
+  vyv-network:
+    driver: bridge
