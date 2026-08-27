@@ -1,0 +1,17 @@
+FROM mariadb:11.4
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
+  CMD mysqladmin ping -h localhost -u root -p${MYSQL_ROOT_PASSWORD} || exit 1
+
+# Configure MariaDB for better performance
+RUN { \
+    echo '[mysqld]'; \
+    echo 'innodb_buffer_pool_size = 128M'; \
+    echo 'max_connections = 100'; \
+    echo 'character-set-server = utf8mb4'; \
+    echo 'collation-server = utf8mb4_unicode_ci'; \
+    echo 'max_allowed_packet = 64M'; \
+} > /etc/mysql/conf.d/custom.cnf
+
+EXPOSE 3306
