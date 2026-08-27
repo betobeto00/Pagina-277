@@ -2,7 +2,7 @@
   "name": "Virtud y Victoria 277 - WordPress Preview",
   "dockerComposeFile": "docker-compose.yml",
   "service": "wordpress",
-  "workspaceFolder": "/var/www/html",
+  "workspaceFolder": "/workspaces/Pagina-277",
   "forwardPorts": [80, 3306],
   "portsAttributes": {
     "80": {

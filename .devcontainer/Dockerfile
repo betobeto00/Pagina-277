@@ -7,10 +7,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy theme
-COPY --chown=www-data:www-data ../wp-theme/ /var/www/html/wp-content/themes/virtud-y-victoria/
+COPY --chown=www-data:www-data wp-theme/ /var/www/html/wp-content/themes/virtud-y-victoria/
 
 # Copy DB init script
-COPY ./init.sql /docker-entrypoint-initdb.d/init.sql
+COPY .devcontainer/init.sql /docker-entrypoint-initdb.d/init.sql
 
 # PHP config
 RUN { \
@@ -27,7 +27,7 @@ RUN a2enmod rewrite headers
 RUN chown -R www-data:www-data /var/www/html
 
 # Entrypoint script
-COPY ./entrypoint.sh /usr/local/bin/entrypoint.sh
+COPY .devcontainer/entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
 ENTRYPOINT ["entrypoint.sh"]
