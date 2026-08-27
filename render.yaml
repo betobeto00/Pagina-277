@@ -9,9 +9,8 @@ services:
     healthCheckPath: /wp-login.php
     envVars:
       - key: WORDPRESS_DB_HOST
-        fromService:
-          type: pserv
-          name: virtud-db
+        fromDatabase:
+          name: virtud-db-maria
           property: host
       - key: WORDPRESS_DB_NAME
         value: virtud_y_victoria
@@ -22,28 +21,14 @@ services:
       - key: WORDPRESS_CONFIG_EXTRA
         value: "define('WP_HOME','https://virtud-y-victoria-277.onrender.com'); define('WP_SITEURL','https://virtud-y-victoria-277.onrender.com'); define('WP_ENVIRONMENT_TYPE', 'production');"
       - key: DATABASE_URL
-        fromService:
-          type: pserv
-          name: virtud-db
+        fromDatabase:
+          name: virtud-db-maria
           property: connectionString
 
-  - type: pserv
-    name: virtud-db
-    runtime: docker
+databases:
+  - name: virtud-db-maria
+    databaseName: virtud_y_victoria
+    user: virtud_admin
     plan: free
     region: oregon
-    dockerfilePath: ./Dockerfile.mariadb
-    dockerContext: .
-    envVars:
-      - key: MYSQL_DATABASE
-        value: virtud_y_victoria
-      - key: MYSQL_USER
-        value: virtud_user
-      - key: MYSQL_PASSWORD
-        value: virtud_pass
-      - key: MYSQL_ROOT_PASSWORD
-        value: root_pass
-    disk:
-      name: mariadb-data
-      mountPath: /var/lib/mysql
-      sizeGB: 1
+    ipAllowList: []
