@@ -1,0 +1,66 @@
+{
+  "$schema": "https://render.com/blueprint.json",
+  "services": [
+    {
+      "type": "web",
+      "name": "virtud-y-victoria-277",
+      "runtime": "docker",
+      "plan": "free",
+      "region": "oregon",
+      "dockerfilePath": "./Dockerfile",
+      "dockerContext": ".",
+      "healthCheckPath": "/wp-login.php",
+      "envVars": [
+        {
+          "key": "WORDPRESS_DB_HOST",
+          "fromService": {
+            "type": "pserv",
+            "name": "virtud-db",
+            "property": "host"
+          }
+        },
+        {
+          "key": "WORDPRESS_DB_USER",
+          "fromService": {
+            "type": "pserv",
+            "name": "virtud-db",
+            "property": "user"
+          }
+        },
+        {
+          "key": "WORDPRESS_DB_PASSWORD",
+          "fromService": {
+            "type": "pserv",
+            "name": "virtud-db",
+            "property": "password"
+          }
+        },
+        {
+          "key": "WORDPRESS_DB_NAME",
+          "value": "virtud_y_victoria"
+        },
+        {
+          "key": "WORDPRESS_TABLE_PREFIX",
+          "value": "wp_"
+        },
+        {
+          "key": "WORDPRESS_DEBUG",
+          "value": "false"
+        },
+        {
+          "key": "WORDPRESS_CONFIG_EXTRA",
+          "value": "define('WP_HOME','https://virtud-y-victoria-277.onrender.com'); define('WP_SITEURL','https://virtud-y-victoria-277.onrender.com'); define('WP_ENVIRONMENT_TYPE', 'production');"
+        }
+      ]
+    }
+  ],
+  "databases": [
+    {
+      "name": "virtud-db",
+      "databaseName": "virtud_y_victoria",
+      "user": "virtud_admin",
+      "plan": "free",
+      "region": "oregon"
+    }
+  ]
+}

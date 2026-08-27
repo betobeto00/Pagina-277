@@ -1,0 +1,44 @@
+# Env / secrets
+.env
+.env.local
+*.env.local
+
+# WordPress uploads (managed via wp-admin in deploy)
+wp-content/uploads/
+wp-content/upgrade/
+wp-content/backup-db/
+wp-content/cache/
+wp-content/backups/
+
+# Logs
+logs/
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swp
+*.swo
+*~
+
+# Node
+node_modules/
+.opencode/node_modules/
+
+# Temp / backups
+*.tmp
+*.temp
+*.zip
+backup-data.json
+backup-*.zip
+backup-*.sql
+
+# DB dumps (init.sql se commitea intencionalmente para el primer deploy)
+*-dump.sql
+*local*.sql
