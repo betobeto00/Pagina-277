@@ -9,15 +9,15 @@ services:
     healthCheckPath: /wp-login.php
     envVars:
       - key: WORDPRESS_DB_HOST
-        value: "{{virtud-db.MYSQL_HOST}}"
+        value: virtud-db
       - key: WORDPRESS_DB_PORT
-        value: "{{virtud-db.MYSQL_PORT}}"
+        value: "3306"
       - key: WORDPRESS_DB_NAME
-        value: "{{virtud-db.MYSQL_DATABASE}}"
+        value: virtud_y_victoria
       - key: WORDPRESS_DB_USER
-        value: "{{virtud-db.MYSQL_USER}}"
+        value: virtud_user
       - key: WORDPRESS_DB_PASSWORD
-        value: "{{virtud-db.MYSQL_PASSWORD}}"
+        value: virtud_pass
       - key: WORDPRESS_TABLE_PREFIX
         value: wp_
       - key: WORDPRESS_DEBUG
